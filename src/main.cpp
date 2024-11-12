@@ -1,18 +1,18 @@
-#include <stdio.h>
-
 #include "binary_tree.h"
+#include "binary_tree_log.h"
 
 int main()
 {
-    BINARY_TREE binaryTreeInfo = {};
-    binary_tree_ctor(&binaryTreeInfo, 10);
-    binary_tree_add_element(&binaryTreeInfo, 20);
-    binary_tree_add_element(&binaryTreeInfo, 100);
-    binary_tree_add_element(&binaryTreeInfo, 10);
-    binary_tree_add_element(&binaryTreeInfo, 10);
-    binary_tree_add_element(&binaryTreeInfo, 10);
-    binary_tree_add_element(&binaryTreeInfo, 10);
-    // printf("node_element = %d\n", binaryTreeInfo.memory[0].element);
+    TREE treeInfo = {};
+
+    tree_ctor(&treeInfo);
+    tree_add(&treeInfo, NULL, ROOT, "вашу мысль");
+    tree_add(&treeInfo, treeInfo.root, RIGHT, "мечтающую на размягченном мозгу");
+    tree_add(&treeInfo, treeInfo.root, LEFT,  "как выжиревший лакей на засаленной кушетке");
+    tree_add(&treeInfo, treeInfo.root->left, RIGHT, "буду дразнить об окровавленный сердца лоскут");
+    tree_add(&treeInfo, treeInfo.root->left, LEFT, "досыта изиздеваюсь нахальный и едкий");
+    tree_graphic_dump(&treeInfo);
+    tree_dtor(&treeInfo);
 
     return 0;
 }

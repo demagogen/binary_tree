@@ -1,0 +1,19 @@
+digraph {bgcolor="#696969" rankdir = TB
+Info[shape=Mrecord,style=filled,fillcolor="grey",label="capacity: 4",fontcolor = "black",fontsize = 14];
+
+node0[shape=Mrecord, style=filled, fillcolor="grey", label=" {address: 0x5a3c3ddce2b0 | parent: (nil) | left:   0x5a3c3ddce310 | right:  0x5a3c3ddce2e0 | element: вашу мысль}"];  
+
+node0->node1[color = "grey"];
+node1[shape=Mrecord, style=filled, fillcolor="grey", label=" {address: 0x5a3c3ddce310 | parent: 0x5a3c3ddce2b0 | left:   0x5a3c3ddce370 | right:  0x5a3c3ddce340 | element: как выжиревший лакей на засаленной кушетке}"];  
+
+node1->node2[color = "grey"];
+node2[shape=Mrecord, style=filled, fillcolor="grey", label=" {address: 0x5a3c3ddce370 | parent: 0x5a3c3ddce310 | left:   (nil) | right:  (nil) | element: досыта изиздеваюсь нахальный и едкий}"];  
+
+node1->node3[color = "grey"];
+node3[shape=Mrecord, style=filled, fillcolor="grey", label=" {address: 0x5a3c3ddce340 | parent: 0x5a3c3ddce310 | left:   (nil) | right:  (nil) | element: буду дразнить об окровавленный сердца лоскут}"];  
+
+node0->node4[color = "grey"];
+node4[shape=Mrecord, style=filled, fillcolor="grey", label=" {address: 0x5a3c3ddce2e0 | parent: 0x5a3c3ddce2b0 | left:   (nil) | right:  (nil) | element: мечтающую на размягченном мозгу}"];  
+
+
+}

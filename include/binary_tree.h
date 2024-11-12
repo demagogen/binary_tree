@@ -3,8 +3,10 @@
 
 #include "binary_tree_typedefs.h"
 
-int binary_tree_ctor (BINARY_TREE* binaryTreeInfo, size_t capacity);
-int binary_tree_dtor (BINARY_TREE* binaryTreeInfo);
-int binary_tree_add_element(BINARY_TREE* binaryTreeInfo, NodeElem_t element);
+TREE_ERROR tree_ctor      (TREE* treeInfo);
+TREE_ERROR tree_dtor      (TREE* treeInfo);
+NODE*      tree_node_ctor (NodeElem_t element);
+TREE_ERROR tree_node_dtor (NODE* nodeInfo);
+TREE_ERROR tree_add       (TREE* treeInfo, NODE* newNodeInfo, TREE_UTILS add_rule, NodeElem_t element);
 
 #endif

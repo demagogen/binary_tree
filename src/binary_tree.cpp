@@ -1,86 +1,94 @@
 #include "binary_tree.h"
 
-int binary_tree_ctor(BINARY_TREE* binaryTreeInfo, size_t capacity)
+TREE_ERROR tree_ctor(TREE* treeInfo)
 {
-    assert(binaryTreeInfo);
+    assert(treeInfo);
 
-    if (capacity == 0)
-    {
-        capacity = StartCapacity;
-    }
+    treeInfo->capacity = StartCapacity;
 
-    binaryTreeInfo->free     = 0;
-    binaryTreeInfo->capacity = capacity;
-    binaryTreeInfo->length   = 0;
+    treeInfo->root = (NODE* ) calloc(1, sizeof(NODE));
 
-    binaryTreeInfo->memory   = (NODE* ) calloc(capacity, sizeof(NODE));
-    binaryTreeInfo->root     = &binaryTreeInfo->memory[binaryTreeInfo->free];
+    treeInfo->root->left   = NULL;
+    treeInfo->root->right  = NULL;
+    treeInfo->root->parent = NULL;
 
-    (*binaryTreeInfo->root).element = -1;
+    treeInfo->error = TREE_NONE;
 
-    binaryTreeInfo->free++;
-    binaryTreeInfo->length++;
-
-    return 0;
+    return treeInfo->error;
 }
 
-int binary_tree_dtor(BINARY_TREE* binaryTreeInfo)
+TREE_ERROR tree_dtor(TREE* treeInfo)
 {
-    assert(binaryTreeInfo);
+    assert(treeInfo);
 
-    binaryTreeInfo->free     = -1;
-    binaryTreeInfo->capacity = -1;
-    binaryTreeInfo->root     = NULL;
+    treeInfo->capacity = TREE_POISON;
 
-    free(binaryTreeInfo->memory);
+    treeInfo->root->left   = NULL;
+    treeInfo->root->right  = NULL;
+    treeInfo->root->parent = NULL;
 
-    return 0;
+    treeInfo->error = TREE_DED_INSIDE;
+
+    return treeInfo->error;
 }
 
-/*
-    TODO define condition for binary_tree_add_element.
-         Make define for add element in left and right,
-         make define for condition in binary_tree_add...
-*/
-
-int binary_tree_add_element(BINARY_TREE* binaryTreeInfo, NodeElem_t element)
+NODE* tree_node_ctor(NodeElem_t element)
 {
-    assert(binaryTreeInfo);
+    assert(element);
 
-    if (binaryTreeInfo->length == 1)
+    NODE* newNodeInfo = (NODE* ) calloc(1, sizeof(NODE));
+
+    newNodeInfo->element = element;
+
+    newNodeInfo->parent  = NULL;
+    newNodeInfo->left    = NULL;
+    newNodeInfo->right   = NULL;
+
+    return newNodeInfo;
+}
+
+TREE_ERROR tree_add(TREE* treeInfo, NODE* parentNodeInfo, TREE_UTILS add_rule, NodeElem_t element)
+{
+    assert(treeInfo);
+    // assert(parentNodeInfo);
+
+    switch(add_rule)
     {
-        binaryTreeInfo->memory[0].element = element;
-        printf("binaryTreeInfo->memory[0].element = %d\n", binaryTreeInfo->memory[0].element);
-        binaryTreeInfo->length++;
+        case(RIGHT):
+            parentNodeInfo->right = tree_node_ctor(element);
+            parentNodeInfo->right->parent = parentNodeInfo;
+            break;
 
-        return 0;
+        case(LEFT):
+            parentNodeInfo->left = tree_node_ctor(element);
+            parentNodeInfo->left->parent = parentNodeInfo;
+            break;
+
+        case(ROOT):
+            treeInfo->root->element = element;
+
+        default:
+            return TREE_ERROR_SIDE;
     }
-    else
+
+    treeInfo->capacity++;
+
+    return treeInfo->error;
+}
+
+TREE_ERROR tree_node_dtor(NODE* nodeInfo)
+{
+    assert(nodeInfo);
+
+    if (!nodeInfo)
     {
-        for (size_t node_index = 0; node_index < binaryTreeInfo->length; node_index++)
-        {
-            if (element >= binaryTreeInfo->memory[node_index].element)
-            {
-                binaryTreeInfo->memory[node_index].right_node = &(binaryTreeInfo->memory[binaryTreeInfo->free]);
-                binaryTreeInfo->memory[binaryTreeInfo->free].element = element;
-                printf("right binaryTreeInfo->memory[binaryTreeInfo->free].element = %d\n", binaryTreeInfo->memory[binaryTreeInfo->free].element);
-                binaryTreeInfo->free++;
-                binaryTreeInfo->length++;
-
-                return 0;
-            }
-            else
-            {
-                binaryTreeInfo->memory[node_index].left_node = &(binaryTreeInfo->memory[binaryTreeInfo->free]);
-                binaryTreeInfo->memory[binaryTreeInfo->free].element = element;
-                printf("left binaryTreeInfo->memory[binaryTreeInfo->free].element = %d\n", binaryTreeInfo->memory[binaryTreeInfo->free].element);
-                binaryTreeInfo->free++;
-                binaryTreeInfo->length++;
-
-                return 0;
-            }
-        }
+        return TREE_NODE_ALLOCATION_ERROR;
     }
 
-    return -1;
+    nodeInfo->right   = NULL;
+    nodeInfo->left    = NULL;
+    nodeInfo->parent  = NULL;
+    nodeInfo->element = NULL;
+
+    return TREE_NONE;
 }
