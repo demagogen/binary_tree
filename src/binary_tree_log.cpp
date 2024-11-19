@@ -55,12 +55,14 @@ void node_print_node (FILE* dotfile, size_t* index, NODE* nodeInfo)
                      "fillcolor=\"grey\", "
                      "label=\" "
                      "{address: %p "
+                     "| type:   %d "
                      "| parent: %p "
                      "| left:   %p "
                      "| right:  %p "
                      "| element: %s}\"];  \n\n",
                      *index,
                      nodeInfo,
+                     nodeInfo->side,
                      nodeInfo->parent,
                      nodeInfo->left,
                      nodeInfo->right,
